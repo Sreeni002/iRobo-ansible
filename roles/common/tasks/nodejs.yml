@@ -1,0 +1,30 @@
+
+#func_app_prereq
+#
+#print_head "Install nodejs repos"
+#npm install &>>$log_file
+#func_status_check $?
+#
+#schema_setup
+#func_systemd_setup
+
+- name: Configure nodeJs
+  ansible.builtin.shell: curl -sL https://rpm.nodesource.com/setup_lts.x | bash
+
+- name: Install nodeJs
+  ansible.builtin.yum:
+    name: nodejs
+    state: installed
+
+- name: Call app_prereq yml
+  ansible.builtin.import_tasks:
+    file: app_prereq.yml
+
+- name: Install Nodejs dependencies
+  ansible.builtin.shell: npm install
+  args:
+    chdir: /app
+
+
+
+
