@@ -1,27 +1,15 @@
-#print_head "Copy mongo repo file"
-#cp $script_path/mongo.repo /etc/yum.repos.d/mongo.repo &>>$log_file
-#func_status_check $?
-#
-#print_head "Install mongo client"
-#yum install mongodb-org-shell -y &>>$log_file
-#func_status_check $?
-#
-#print_head "Load schema"
-#mongo --host mongodb-dev.sreenivasulareddydevops.online </app/schema/${component}.js &>>$log_file
-#func_status_check $?
-
-- name: Copy Mongo repo file
-  ansible.builtin.copy:
-    src: mongo.repo
-    dest: /etc/yum.repos.d/mongo.repo
+- name: Load MongoDB schema
   when: schema_setup == "mongo"
+  block:
+    - name: Copy Mongo repo file
+      ansible.builtin.copy:
+        src: mongo.repo
+        dest: /etc/yum.repos.d/mongo.repo
 
-- name: Install mongodb client
-  ansible.builtin.yum:
-    name: mongodb-org-shell
-    state: installed
-  when: schema_setup == "mongo"
+    - name: Install mongodb client
+      ansible.builtin.yum:
+        name: mongodb-org-shell
+        state: installed
 
-- name: load schema
-  ansible.builtin.shell: mongo --host {{ lookup('aws_ssm', 'dev.catalogue.mongo_endpoint', region='us-east-1' ) }} </app/schema/{{component}}.js
-  when: schema_setup == "mongo"
+    - name: load schema
+      ansible.builtin.shell: mongo --host {{ lookup('aws_ssm', 'dev.catalogue.mongo_endpoint', region='us-east-1' ) }} </app/schema/{{component}}.js
