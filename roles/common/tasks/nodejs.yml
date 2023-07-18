@@ -1,10 +1,4 @@
 
-#func_app_prereq
-#
-#print_head "Install nodejs repos"
-#npm install &>>$log_file
-#func_status_check $?
-#
 #schema_setup
 #func_systemd_setup
 
@@ -25,6 +19,8 @@
   args:
     chdir: /app
 
-
+- name: include schema setup
+  ansible.builtin.import_tasks:
+    file: schema_setup.yml
 
 
