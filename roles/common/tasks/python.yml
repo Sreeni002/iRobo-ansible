@@ -3,7 +3,7 @@
     name:
       - python36
       - gcc
-      - python3
+      - python3-devel
     state: installed
 
 - name: Include app_prereq yml
