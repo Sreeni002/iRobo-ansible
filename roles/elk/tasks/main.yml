@@ -1,9 +1,9 @@
 - name: Logstash config
   ansible.builtin.template:
-    src: logstatsh.conf
+    src: logstash.conf
     dest: /etc/logstash/conf.d/logstash.conf
 
-- name: Restart Logstatsh
+- name: Restart Logstash
   ansible.builtin.systemd:
     name: logstash
     state: restarted
