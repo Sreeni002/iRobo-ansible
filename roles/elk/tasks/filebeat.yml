@@ -1,6 +1,6 @@
-- name: Copy Elastic Repo file
-  ansible.builtin.templates:
-    src: ealstic.repo
+- name: Copy Elastic repo file
+  ansible.builtin.template:
+    src: elastic.repo
     dest: /etc/yum.repos.d/elastic.repo
 
 - name: Install filebeat
