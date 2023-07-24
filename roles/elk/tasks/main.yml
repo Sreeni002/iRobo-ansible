@@ -1,0 +1,10 @@
+- name: Logstash config
+  ansible.builtin.template:
+    src: logstatsh.conf
+    dest: /etc/logstash/conf.d/logstash.conf
+
+- name: Restart Logstatsh
+  ansible.builtin.systemd:
+    name: logstash
+    state: restarted
+    enables: true
