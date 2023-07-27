@@ -29,3 +29,7 @@ scrape_configs:
         filters:
           - name: tag:monitor
             values: [ "true" ]
+#relabel configs is using to add more tags of ec2 in Grafana
+    relabel_configs:
+      - source_labels: [__meta_ec2_tag_Name__]
+        target_label: Name
