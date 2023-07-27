@@ -31,5 +31,9 @@ scrape_configs:
             values: [ "true" ]
 #relabel configs is using to add more tags of ec2 in Grafana
     relabel_configs:
-      - source_labels: [__meta_ec2_tag_Name__]
+      - source_labels: [__meta_ec2_tag_Name ]
         target_label: Name
+      - source_labels: [ __meta_ec2_tag_env ]
+        target_label: env
+      - source_labels: [ __meta_ec2_tag_component ]
+        target_label: component
