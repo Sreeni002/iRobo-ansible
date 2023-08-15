@@ -21,6 +21,6 @@
 - name: Download and archive content
   ansible.builtin.unarchive:
     #the below link should be from nexus as we have uploaded the code into NEXUS: http://172.31.81.83/repository/{{component}}/{{component}}-{{app_version}}.zip
-    src: https://roboshop-artifacts.s3.amazonaws.com/{{component}}.zip
+    src: http://172.31.81.83:8081/repository/{{component}}/{{component}}-{{ lookup('aws_ssm', '{{ env }}.{{component}}.app_version', region='us-east-1' ) }}.zip
     dest: /app
     remote_src: yes
